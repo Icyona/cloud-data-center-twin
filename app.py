@@ -318,7 +318,7 @@ with net_col2:
 
 # ---------- OPTIMIZATION INSIGHTS ----------
 st.markdown(
-    '<div class="section-title">05 / Optimization Insights</div>',
+    '<div class="section-title">04 / Optimization Insights</div>',
     unsafe_allow_html=True
 )
 
@@ -344,7 +344,7 @@ with insight3:
     st.caption("Average of CPU and memory utilization.")
 # ---------- RISK DISTRIBUTION ----------
 st.markdown(
-    '<div class="section-title">04 / Risk Distribution</div>',
+    '<div class="section-title">05 / Risk Distribution</div>',
     unsafe_allow_html=True
 )
 
@@ -386,7 +386,7 @@ st.plotly_chart(risk_chart, use_container_width=True)
 
 # ---------- RECOMMENDATIONS ----------
 st.markdown(
-    '<div class="section-title">04 / System Recommendations</div>',
+    '<div class="section-title">06 / System Recommendations</div>',
     unsafe_allow_html=True
 )
 
