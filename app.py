@@ -189,6 +189,33 @@ if selected_server != "All Servers":
 else:
     view = df.copy()
 
+# ---------- OPTIMIZATION INSIGHTS ----------
+st.markdown(
+    '<div class="section-title">05 / Optimization Insights</div>',
+    unsafe_allow_html=True
+)
+
+overloaded = ((view["CPU"] > 85) | (view["Memory"] > 85)).sum()
+
+underused = (
+    (view["CPU"] < 30) & (view["Memory"] < 40)
+).sum()
+
+insight1, insight2, insight3 = st.columns(3)
+
+with insight1:
+    st.metric("Overloaded Servers", int(overloaded))
+    st.caption("May need workload balancing or extra capacity.")
+
+with insight2:
+    st.metric("Underutilized Servers", int(underused))
+    st.caption("Could be candidates for workload consolidation.")
+
+with insight3:
+    st.metric("Average Resource Usage",
+              f"{((view['CPU'].mean() + view['Memory'].mean()) / 2):.1f}%")
+    st.caption("Average of CPU and memory utilization.")
+
 # ---------- SERVER TABLE ----------
 st.markdown(
     '<div class="section-title">01 / Server Infrastructure</div>',
