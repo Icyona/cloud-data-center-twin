@@ -362,7 +362,9 @@ for _, row in view.iterrows():
             "High failure risk: investigate server health immediately."
         )
 
-    recommendation = " ".join(recommendations)
+    recommendation = "<br><br>".join(
+    f"• {item}" for item in recommendations
+)
 
     css_class = (
         "alert-card" if row["Status"] != "NORMAL"
