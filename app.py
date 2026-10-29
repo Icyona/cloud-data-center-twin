@@ -316,6 +316,48 @@ with net_col2:
 
     st.plotly_chart(risk_fig, use_container_width=True)
 
+# ---------- RISK DISTRIBUTION ----------
+st.markdown(
+    '<div class="section-title">04 / Risk Distribution</div>',
+    unsafe_allow_html=True
+)
+
+risk_counts = (
+    df["Status"]
+    .value_counts()
+    .reindex(
+        ["NORMAL", "MEDIUM RISK", "HIGH RISK"],
+        fill_value=0
+    )
+    .rename_axis("Status")
+    .reset_index(name="Servers")
+)
+
+risk_chart = px.pie(
+    risk_counts,
+    names="Status",
+    values="Servers",
+    hole=0.65,
+    color="Status",
+    color_discrete_map={
+        "NORMAL": "#34d399",
+        "MEDIUM RISK": "#fbbf24",
+        "HIGH RISK": "#fb7185"
+    },
+    template="plotly_dark"
+)
+
+risk_chart.update_layout(
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
+    font_color="#e2e8f0",
+    showlegend=True,
+    margin=dict(l=10, r=10, t=20, b=10),
+    height=320
+)
+
+st.plotly_chart(risk_chart, use_container_width=True)
+
 # ---------- RECOMMENDATIONS ----------
 st.markdown(
     '<div class="section-title">04 / System Recommendations</div>',
