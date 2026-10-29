@@ -355,6 +355,18 @@ for _, row in view.iterrows():
     </div>
     """, unsafe_allow_html=True)
 
+# ---------- DOWNLOAD SERVER REPORT ----------
+st.markdown("### Export Analytics Report")
+
+csv_data = df.to_csv(index=False).encode("utf-8")
+
+st.download_button(
+    label="Download Server Report",
+    data=csv_data,
+    file_name="cloud_server_report.csv",
+    mime="text/csv"
+)
+
 # ---------- FOOTER ----------
 st.markdown("---")
 st.markdown(
