@@ -325,23 +325,44 @@ st.markdown(
 )
 
 for _, row in view.iterrows():
-    if row["CPU"] > 85 or row["Memory"] > 85:
-        recommendation = (
-            "Consider scaling resources or moving workloads "
-            "to a less busy server."
+    recommendations = []
+
+    if row["CPU"] > 85:
+        recommendations.append(
+            "High CPU usage: redistribute workloads or scale up resources."
         )
-    elif row["CPU"] < 30 and row["Memory"] < 40:
-        recommendation = (
-            "Low utilization detected. Consider consolidating "
-            "workloads to save resources."
+
+    if row["Memory"] > 85:
+        recommendations.append(
+            "High memory usage: free unused memory or increase capacity."
         )
-    else:
-        recommendation = "Resource usage is within the selected limits."
+
+    if row["Temperature"] > 75:
+        recommendations.append(
+            "High temperature: inspect cooling and airflow."
+        )
+
+    if row["Network"] > 80:
+        recommendations.append(
+            "High network usage: review traffic and balance network load."
+        )
+
+    if row["CPU"] < 30 and row["Memory"] < 40:
+        recommendations.append(
+            "Low utilization: consider consolidating workloads."
+        )
+
+    if not recommendations:
+        recommendations.append(
+            "Resource usage is within acceptable limits."
+        )
 
     if row["Status"] == "HIGH RISK":
-        recommendation += (
-            " Investigate server temperature and network conditions."
+        recommendations.append(
+            "High failure risk: investigate server health immediately."
         )
+
+    recommendation = " ".join(recommendations)
 
     css_class = (
         "alert-card" if row["Status"] != "NORMAL"
