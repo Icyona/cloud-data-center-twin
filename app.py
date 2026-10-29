@@ -109,21 +109,20 @@ st.sidebar.caption("CLOUD INFRASTRUCTURE")
 st.sidebar.markdown("---")
 st.sidebar.markdown("### Control Center")
 
+import random
+
 if st.sidebar.button("↻ Simulate New Readings",
                      use_container_width=True):
-    for col, maximum in [
-        ("CPU", 100),
-        ("Memory", 100),
-        ("Temperature", 100),
-        ("Network", 100)
-    ]:
-        df_new = st.session_state.servers
-        df_new[col] = (
-            df_new[col] +
-            [random.randint(-8, 8) for _ in range(len(df_new))]
-        ).clip(0, maximum)
 
-    st.session_state.servers = df_new
+    for i in st.session_state.servers.index:
+        st.session_state.servers.loc[i, "CPU"] = random.randint(20, 95)
+        st.session_state.servers.loc[i, "Memory"] = random.randint(25, 95)
+        st.session_state.servers.loc[i, "Temperature"] = random.randint(35, 90)
+        st.session_state.servers.loc[i, "Network"] = random.randint(10, 95)
+        st.session_state.servers.loc[i, "Packet Loss"] = round(
+            random.uniform(0, 4), 1
+        )
+
     st.rerun()
 
 selected_server = st.sidebar.selectbox(
